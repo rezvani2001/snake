@@ -49,7 +49,7 @@ public class Main extends Application {
                     snake.move();
                     Platform.runLater(() -> {
                         duplicateBoard(gridPane);
-                        makeSnake(snake, gridPane);
+//                        makeSnake(snake, gridPane);
                     });
 
                     Thread.sleep(200);
@@ -65,13 +65,13 @@ public class Main extends Application {
         scene.addEventFilter(KeyEvent.KEY_PRESSED, event ->
 
         {
-            if (event.getCode().equals(KeyCode.W)) {
+            if (event.getCode().equals(KeyCode.W) || event.getCode().equals(KeyCode.UP)) {
                 snake.setDirection(Direction.UP);
-            } else if (event.getCode().equals(KeyCode.S)) {
+            } else if (event.getCode().equals(KeyCode.S) || event.getCode().equals(KeyCode.DOWN)) {
                 snake.setDirection(Direction.DOWN);
-            } else if (event.getCode().equals(KeyCode.A)) {
+            } else if (event.getCode().equals(KeyCode.A) || event.getCode().equals(KeyCode.LEFT)) {
                 snake.setDirection(Direction.LEFT);
-            } else if (event.getCode().equals(KeyCode.D)) {
+            } else if (event.getCode().equals(KeyCode.D) || event.getCode().equals(KeyCode.RIGHT)) {
                 snake.setDirection(Direction.RIGHT);
             }
         });
