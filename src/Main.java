@@ -2,18 +2,14 @@ import GUI.Grass;
 import LOGIC.Board;
 import LOGIC.Direction;
 import LOGIC.Snake;
-import LOGIC.blocks.Block;
-import LOGIC.blocks.BlockType;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.event.EventType;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -34,22 +30,20 @@ public class Main extends Application {
         init();
 
         GridPane gridPane = new GridPane();
-        gridPane.setGridLinesVisible(true);
-        gridPane.setAlignment(Pos.CENTER);
-
+        gridPane.setStyle("-fx-background-color: #000000;");
         pane.getChildren().add(gridPane);
 
         Thread thread = new Thread(() -> {
             Platform.runLater(() -> duplicateBoard(gridPane));
             try {
-                Thread.sleep(1000);
+                Thread.sleep(750);
 
 
                 while (true) {
                     snake.move();
                     Platform.runLater(() -> {
                         duplicateBoard(gridPane);
-//                        makeSnake(snake, gridPane);
+                        makeSnake(snake, gridPane);
                     });
 
                     Thread.sleep(200);
@@ -60,7 +54,7 @@ public class Main extends Application {
         });
 
         thread.start();
-        Scene scene = new Scene(pane, Board.instance.width * 30, Board.instance.height * 30);
+        Scene scene = new Scene(pane, Board.instance.width * 34, Board.instance.height * 34);
 
         scene.addEventFilter(KeyEvent.KEY_PRESSED, event ->
 
@@ -95,7 +89,7 @@ public class Main extends Application {
 
     public static void makeSnake(Snake snake, GridPane gridPane) {
         for (int i = 0; i < snake.getBody().size(); i++) {
-            gridPane.add(new Rectangle(30, 30, Color.GRAY),
+            gridPane.add(new Rectangle(30, 30, Color.GHOSTWHITE.brighter()),
                     snake.getBody().get(i).getX(), snake.getBody().get(i).getY());
         }
     }
