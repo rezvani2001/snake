@@ -9,6 +9,7 @@ public class LoopingArray<T> {
 
     public LoopingArray() {
         this.array = new Object[15];
+        this.arraySize = 15;
         this.size = 0;
         this.head = 0;
         this.tail = 0;
@@ -23,7 +24,7 @@ public class LoopingArray<T> {
 
     public void addToFront(T element) {
         checkSize();
-        head = (head - 1) % arraySize;
+        head = (head - 1 + arraySize) % arraySize;
         array[head] = element;
         size++;
     }

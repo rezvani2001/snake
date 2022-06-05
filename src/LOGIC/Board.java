@@ -2,6 +2,7 @@ package LOGIC;
 
 import LOGIC.blocks.Block;
 import LOGIC.blocks.BlockType;
+import javafx.scene.layout.GridPane;
 
 public class Board {
     public static Board instance;
@@ -28,6 +29,16 @@ public class Board {
                 }
             }
         }
+    }
+
+    public GridPane getBoard() {
+        GridPane gridPane = new GridPane();
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                gridPane.add(board[i][j].uiElement, i, j);
+            }
+        }
+        return gridPane;
     }
 
     public Block getBlock(int x, int y) {
