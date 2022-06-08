@@ -34,7 +34,7 @@ public class LoopingArray<T> {
             arraySize *= 2;
             T[] newArray = (T[]) new Object[arraySize];
             for (int i = 0; i < size; i++) {
-                newArray[i] = (T) array[(head + i) % arraySize];
+                newArray[i] = (T) array[(head + i) % array.length];
             }
             array = newArray;
             head = 0;
