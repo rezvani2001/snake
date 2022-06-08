@@ -11,18 +11,17 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Circle;
 
-import java.awt.event.MouseEvent;
 import java.util.Random;
 
 public class Main extends Application {
+    static FlowPane pane;
+    static Snake snake;
+
     public static void main(String[] args) {
         launch(args);
     }
-
-    static FlowPane pane;
-    static Snake snake;
 
     @Override
     public void start(javafx.stage.Stage primaryStage) {
@@ -43,6 +42,7 @@ public class Main extends Application {
                     snake.move();
                     Platform.runLater(() -> {
                         duplicateBoard(gridPane);
+                        showApple(gridPane);
                         makeSnake(snake, gridPane);
                     });
 
@@ -76,6 +76,7 @@ public class Main extends Application {
 
     public void init() {
         Grass.rand = new Random();
+        Board.rand = new Random();
         new Board(30, 30);
         pane = new FlowPane();
         snake = new Snake();
@@ -87,9 +88,13 @@ public class Main extends Application {
         gridPane.getChildren().addAll(Board.instance.getBoard().getChildren());
     }
 
+    public static void showApple(GridPane gridPane) {
+        gridPane.add(Board.apple.uiElement, Board.apple.coordinate.getX(), Board.apple.coordinate.getY());
+    }
+
     public static void makeSnake(Snake snake, GridPane gridPane) {
         for (int i = 0; i < snake.getBody().size(); i++) {
-            gridPane.add(new Rectangle(30, 30, Color.GHOSTWHITE.brighter()),
+            gridPane.add(new Circle(15, Color.GHOSTWHITE.brighter()),
                     snake.getBody().get(i).getX(), snake.getBody().get(i).getY());
         }
     }

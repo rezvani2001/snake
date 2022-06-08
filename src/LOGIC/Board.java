@@ -4,19 +4,28 @@ import LOGIC.blocks.Block;
 import LOGIC.blocks.BlockType;
 import javafx.scene.layout.GridPane;
 
+import java.util.Random;
+
 public class Board {
     public static Board instance;
+    public static Random rand;
+    public static Apple apple;
 
-    private Block[][] board;
-    public int width;
-    public int height;
+    private final Block[][] board;
+    public static int width;
+    public static int height;
 
     public Board(int width, int height) {
         this.board = new Block[width][height];
-        this.width = width;
-        this.height = height;
+        Board.width = width;
+        Board.height = height;
         this.initBoard();
         Board.instance = this;
+        newApple();
+    }
+
+    public static void newApple() {
+        apple = new Apple(new Coordinate(rand.nextInt(width - 2) + 1, rand.nextInt(height - 2) + 1));
     }
 
     private void initBoard() {
@@ -39,6 +48,16 @@ public class Board {
             }
         }
         return gridPane;
+    }
+
+    public static boolean checkSnakeWithBoard(Coordinate coordinate) {
+        if (apple.coordinate.getX() == coordinate.getX() && apple.coordinate.getY() == coordinate.getY()) {
+            newApple();
+            Snake.instance.addToBack();
+        }
+
+        return coordinate.getX() <= 0 || coordinate.getX() >= width - 1
+                || coordinate.getY() <= 0 || coordinate.getY() >= height - 1;
     }
 
     public Block getBlock(int x, int y) {
