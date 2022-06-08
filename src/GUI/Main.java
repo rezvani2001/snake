@@ -1,10 +1,10 @@
-import GUI.Grass;
+package GUI;
+
 import LOGIC.Board;
 import LOGIC.Direction;
 import LOGIC.Snake;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
