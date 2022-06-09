@@ -71,9 +71,9 @@ public class Snake {
     }
 
     public boolean checkCrash() {
-        Coordinate coordinate = body.get(body.size() - 1);
+        Coordinate coordinate = body.get(0);
 
-        for (int i = 0; i < body.size() - 1; i++) {
+        for (int i = 1; i < body.size(); i++) {
             Coordinate bod = body.get(i);
             if (coordinate.getX() == bod.getX() && coordinate.getY() == bod.getY()) {
                 return true;

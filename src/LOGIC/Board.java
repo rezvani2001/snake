@@ -42,6 +42,7 @@ public class Board {
 
     public GridPane getBoard() {
         GridPane gridPane = new GridPane();
+        gridPane.setStyle("-fx-background-color: #000000");
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 gridPane.add(board[i][j].uiElement, i, j);

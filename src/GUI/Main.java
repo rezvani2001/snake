@@ -1,5 +1,6 @@
 package GUI;
 
+import LOGIC.Apple;
 import LOGIC.Board;
 import LOGIC.Direction;
 import LOGIC.Snake;
@@ -8,15 +9,17 @@ import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
 import java.util.Random;
 
 public class Main extends Application {
-    static FlowPane pane;
+    static StackPane pane;
     static Snake snake;
 
     public static void main(String[] args) {
@@ -28,12 +31,11 @@ public class Main extends Application {
         primaryStage.setTitle("Snake");
         init();
 
-        GridPane gridPane = new GridPane();
-        gridPane.setStyle("-fx-background-color: #000000;");
-        pane.getChildren().add(gridPane);
+        AnchorPane anchorPane = new AnchorPane();
+
+        pane.getChildren().addAll(Board.instance.getBoard(), anchorPane);
 
         Thread thread = new Thread(() -> {
-            Platform.runLater(() -> duplicateBoard(gridPane));
             try {
                 Thread.sleep(750);
 
@@ -41,9 +43,9 @@ public class Main extends Application {
                 while (true) {
                     snake.move();
                     Platform.runLater(() -> {
-                        duplicateBoard(gridPane);
-                        showApple(gridPane);
-                        makeSnake(snake, gridPane);
+                        anchorPane.getChildren().clear();
+                        showApple(anchorPane);
+                        makeSnake(snake, anchorPane);
                     });
 
                     Thread.sleep(200);
@@ -54,7 +56,7 @@ public class Main extends Application {
         });
 
         thread.start();
-        Scene scene = new Scene(pane, Board.instance.width * 34, Board.instance.height * 34);
+        Scene scene = new Scene(pane, Board.instance.width * 30, Board.instance.height * 30);
 
         scene.addEventFilter(KeyEvent.KEY_PRESSED, event ->
 
@@ -78,24 +80,22 @@ public class Main extends Application {
         Grass.rand = new Random();
         Board.rand = new Random();
         new Board(30, 30);
-        pane = new FlowPane();
+        pane = new StackPane();
         snake = new Snake();
     }
 
-    public static void duplicateBoard(GridPane gridPane) {
-        gridPane.getChildren().clear();
-
-        gridPane.getChildren().addAll(Board.instance.getBoard().getChildren());
+    public static void showApple(AnchorPane anchorPane) {
+        anchorPane.getChildren().add(Apple.uiElement);
+        AnchorPane.setLeftAnchor(Apple.uiElement, Board.apple.coordinate.getX() * 30.0);
+        AnchorPane.setTopAnchor(Apple.uiElement, Board.apple.coordinate.getY() * 30.0);
     }
 
-    public static void showApple(GridPane gridPane) {
-        gridPane.add(Board.apple.uiElement, Board.apple.coordinate.getX(), Board.apple.coordinate.getY());
-    }
-
-    public static void makeSnake(Snake snake, GridPane gridPane) {
+    public static void makeSnake(Snake snake, AnchorPane anchorPane) {
         for (int i = 0; i < snake.getBody().size(); i++) {
-            gridPane.add(new Circle(15, Color.GHOSTWHITE.brighter()),
-                    snake.getBody().get(i).getX(), snake.getBody().get(i).getY());
+            Circle circle = new Circle(15, Color.GHOSTWHITE.brighter());
+            anchorPane.getChildren().add(circle);
+            AnchorPane.setLeftAnchor(circle, snake.getBody().get(i).getX() * 30.0);
+            AnchorPane.setTopAnchor(circle, snake.getBody().get(i).getY() * 30.0);
         }
     }
 }
