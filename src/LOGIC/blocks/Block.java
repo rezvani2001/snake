@@ -1,6 +1,6 @@
 package LOGIC.blocks;
 
-import GUI.Grass;
+import GUI.templates.Grass;
 import LOGIC.Coordinate;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;

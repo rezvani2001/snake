@@ -1,5 +1,6 @@
 package LOGIC;
 
+import GUI.Main;
 import LOGIC.blocks.Block;
 import LOGIC.blocks.BlockType;
 import javafx.scene.layout.GridPane;
@@ -8,7 +9,6 @@ import java.util.Random;
 
 public class Board {
     public static Board instance;
-    public static Random rand;
     public static Apple apple;
 
     private final Block[][] board;
@@ -25,7 +25,7 @@ public class Board {
     }
 
     public static void newApple() {
-        apple = new Apple(new Coordinate(rand.nextInt(width - 2) + 1, rand.nextInt(height - 2) + 1));
+        apple = new Apple(new Coordinate(Main.rand.nextInt(width - 2) + 1, Main.rand.nextInt(height - 2) + 1));
     }
 
     private void initBoard() {

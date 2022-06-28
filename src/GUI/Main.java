@@ -10,8 +10,6 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -21,6 +19,7 @@ import java.util.Random;
 public class Main extends Application {
     static StackPane pane;
     static Snake snake;
+    public static Random rand;
 
     public static void main(String[] args) {
         launch(args);
@@ -56,7 +55,7 @@ public class Main extends Application {
         });
 
         thread.start();
-        Scene scene = new Scene(pane, Board.instance.width * 30, Board.instance.height * 30);
+        Scene scene = new Scene(pane, Board.width * 30, Board.height * 30);
 
         scene.addEventFilter(KeyEvent.KEY_PRESSED, event ->
 
@@ -77,8 +76,7 @@ public class Main extends Application {
     }
 
     public void init() {
-        Grass.rand = new Random();
-        Board.rand = new Random();
+        rand = new Random();
         new Board(30, 30);
         pane = new StackPane();
         snake = new Snake();
